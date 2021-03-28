@@ -1,0 +1,21 @@
+.title-background{
+    background-color: #8ac4d0;
+}
+.titleheading{
+    color: #063888;
+}
+.lightyellow{
+    color: #fbeeac;
+}
+.yellow{
+    color:#f4d160;
+}
+.darkblue{
+    color: #28527a;
+}
+
+.ListBook{
+    background-color: #063888;
+    height: 100px;
+    visibility: hidden;
+}
