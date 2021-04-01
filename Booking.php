@@ -136,7 +136,7 @@
                                 // $btneye ='<i class="fa fa-eye nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
                                 // $btnpen ='<i class="fa fa-pencil nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
                                 // $btnbin ='<i class="fa fa-trash nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
-                                $test = '<div class="row"><i class="fa fa-eye nav-link col-1 " data-toggle="modal" data-target="#modalbooklook" aria-hidden="true"></i> <i class="fa fa-pencil nav-link col-1 " data-toggle="modal" data-target="#modalbookedit"  aria-hidden="true"></i><i class="fa fa-trash nav-link col-1 " data-toggle="modal" data-target="#modalLogin"></div>';
+                                $test = '<div class="row"><i class="fa fa-eye nav-link col-1 " data-toggle="modal" data-target="#modalbookDetail" aria-hidden="true"></i> <i class="fa fa-pencil nav-link col-1 " data-toggle="modal" data-target="#modalbookedit"  aria-hidden="true"></i><i class="fa fa-trash nav-link col-1 " data-toggle="modal" data-target="#modalLogin"></div>';
                                 if($str != "") {
                                     $arr = explode(',', $str);
                                     echo "<tr><th scope = 'row'>  $arr[0]</th> <td> $arr[1] </td><td>$arr[3]</td> <td> $arr[4] </td><td> $arr[5] </td><td> $test</td></tr>";
@@ -225,67 +225,11 @@
         </div>
     </div>
 
-    <!-- Modal Books  Look-->
-    <div class="modal fade" id="modalbooklook" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form method="POST" id="frmbooklook">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Book Detail</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="booklookmodalbody">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtisbn" placeholder="ISBN" require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtnamebook" placeholder="Book Name"
-                                    require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="file" class="custom-file-input" id="inputfile">
-                                <label class="custom-file-label" for="inputfile">Choose file </label>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtatname" placeholder="Author Name"
-                                    require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtnis" placeholder="Number in Stock"
-                                    require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtprice" placeholder="Price" require>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" id="booklookmodalfooter">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="Submit" class="btn btn-success">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal Books -->
     <div class="modal fade" id="modalbook" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" id="frmbook">
+                <form method="POST" id="frmbook" action='' enctype='multipart/form-data' >
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add New Books</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -306,7 +250,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <input type="file" class="custom-file-input" id="inputfile">
+                                <input type="file" class="custom-file-input" id="file" name="file">
                                 <label class="custom-file-label" for="inputfile">Choose file </label>
                             </div>
                         </div>
@@ -330,72 +274,18 @@
                     </div>
                     <div class="modal-footer" id="bookmodalfooter">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="Submit" class="btn btn-success">Add</button>
+                        <button type="Submit" class="btn btn-success" value="Upload">Add</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-     <!-- Modal Books Edit -->
-     <div class="modal fade" id="modalbookedit" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form method="POST" id="frmbookedit">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Book ISBN: </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="bookeditmodalbody">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtisbn" placeholder="ISBN" require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtnamebook" placeholder="Book Name"
-                                    require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="file" class="custom-file-input" id="inputfile">
-                                <label class="custom-file-label" for="inputfile">Choose file </label>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtatname" placeholder="Author Name"
-                                    require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtnis" placeholder="Number in Stock"
-                                    require>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="txtprice" placeholder="Price" require>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" id="bookeditmodalfooter">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="Submit" class="btn btn-success">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
@@ -481,10 +371,10 @@
 
 
     $(function() {
-        $("#modalLogin, #modalSignup,").on("hidden.bs.modal", function() {
+        $("#modalLogin, #modalSignup").on("hidden.bs.modal", function() {
             location.reload();
         });
-    })
+    });
 
     $(function() {
         $('#book').click(function() {
