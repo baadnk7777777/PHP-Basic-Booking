@@ -121,22 +121,24 @@
                                 <th scope="col">In Stock</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Actions</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
-                        <!-- <div class="row"><div class="col-1" data-toggle="modal" data-target="#modalLogin" ><i class="fa fa-eye nav-link " aria-hidden="true"></i> </div><div class="col-1"><i class="fa fa-pencil nav-link "  aria-hidden="true"></i> </div><div class="col-1"><i class="fa fa-trash nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i> </div> </div> -->
+                            <!-- <div class="row"><div class="col-1" data-toggle="modal" data-target="#modalLogin" ><i class="fa fa-eye nav-link " aria-hidden="true"></i> </div><div class="col-1"><i class="fa fa-pencil nav-link "  aria-hidden="true"></i> </div><div class="col-1"><i class="fa fa-trash nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i> </div> </div> -->
                             <?php 
                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
                             $num_row =0;
+                            $key =0;
                             while(!feof($myfile)) {
                                 $str = fgets($myfile);
                                 $num_row++;
+                                $key++;
                                 $arr="";
                                 // $btneye ='<i class="fa fa-eye nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
                                 // $btnpen ='<i class="fa fa-pencil nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
                                 // $btnbin ='<i class="fa fa-trash nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
-                                $test = '<div class="row"><i class="fa fa-eye nav-link col-1 " data-toggle="modal" data-target="#modalbookDetail" aria-hidden="true"></i> <i class="fa fa-pencil nav-link col-1 " data-toggle="modal" data-target="#modalbookedit"  aria-hidden="true"></i><i class="fa fa-trash nav-link col-1 " data-toggle="modal" data-target="#modalLogin"></div>';
+                                $test = '<div class="row"><i class="fa fa-eye nav-link col-1 " data-toggle="modal" data-target="#modalbookdetail" aria-hidden="true" id= '.$key.'  ></i> <i class="fa fa-pencil nav-link col-1 " data-toggle="modal" data-target="#modalbookedit"  aria-hidden="true"></i><i class="fa fa-trash nav-link col-1 " data-toggle="modal" data-target=""></div>';
                                 if($str != "") {
                                     $arr = explode(',', $str);
                                     echo "<tr><th scope = 'row'>  $arr[0]</th> <td> $arr[1] </td><td>$arr[3]</td> <td> $arr[4] </td><td> $arr[5] </td><td> $test</td></tr>";
@@ -229,7 +231,7 @@
     <div class="modal fade" id="modalbook" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" id="frmbook" action='' enctype='multipart/form-data' >
+                <form method="POST" id="frmbook" action='' enctype='multipart/form-data'>
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add New Books</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -274,14 +276,143 @@
                     </div>
                     <div class="modal-footer" id="bookmodalfooter">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="Submit" class="btn btn-success" value="Upload">Add</button>
+                        <button type="Submit" class="btn btn-success" value="submit">Add</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    
+    <!-- Modal Books Detail -->
+    <div class="modal fade" id="modalbookdetail" tabindex="-1" role="dialog" aria-labelledby="modalLogin"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Book Detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="bookdetailmodalbody">
+                        <div class="row">
+                            <div class="col-6">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"> ISBN</th>
+                                            <?php 
+                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
+                                             $num_row =0;
+                                             while(!feof($myfile)) {
+                                                $str = fgets($myfile);
+                                                $num_row++;
+                                                $arr="";
+                                                
+                                                if($str != "" && $num_row ==1 ) {
+                                                    $arr = explode(',', $str);
+                                                    echo "<td> $arr[0] </td>";
+                                                } 
+                                             }
+                                             
+                                            ?> 
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"> Name</th>
+                                            <?php 
+                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
+                                             $num_row =0;
+                                             while(!feof($myfile)) {
+                                                $str = fgets($myfile);
+                                                $num_row++;
+                                                $arr="";
+                                                
+                                                if($str != "" && $num_row ==1 ) {
+                                                    $arr = explode(',', $str);
+                                                    echo "<td> $arr[1] </td>";
+                                                } 
+                                             }
+                                             
+                                            ?> 
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"> Author</th>
+                                            <?php 
+                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
+                                             $num_row =0;
+                                             while(!feof($myfile)) {
+                                                $str = fgets($myfile);
+                                                $num_row++;
+                                                $arr="";
+                                                
+                                                if($str != "" && $num_row ==1 ) {
+                                                    $arr = explode(',', $str);
+                                                    echo "<td> $arr[3] </td>";
+                                                } 
+                                             }
+                                             
+                                            ?> 
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"> In Srock</th>
+                                            <?php 
+                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
+                                             $num_row =0;
+                                             while(!feof($myfile)) {
+                                                $str = fgets($myfile);
+                                                $num_row++;
+                                                $arr="";
+                                                
+                                                if($str != "" && $num_row ==1 ) {
+                                                    $arr = explode(',', $str);
+                                                    echo "<td> $arr[4] </td>";
+                                                } 
+                                             }
+                                             
+                                            ?> 
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"> Price </th>
+                                            <?php 
+                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
+                                             $num_row =0;
+                                             while(!feof($myfile)) {
+                                                $str = fgets($myfile);
+                                                $num_row++;
+                                                $arr="";
+                                                
+                                                if($str != "" && $num_row ==1 ) {
+                                                    $arr = explode(',', $str);
+                                                    echo "<td> $arr[5] </td>";
+                                                } 
+                                             }
+                                             
+                                            ?> 
+                                        </tr>
+                                        <?php fclose($myfile); ?>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                            <div class="col-6">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat vitae, optio, ratione
+                                rerum doloremque, ab at aperiam saepe magnam aliquid eum laudantium? Ullam non dolore
+                                culpa quae ab, corporis aliquam?
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer" id="bookdetailfooter">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="Submit" class="btn btn-success" value="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -371,7 +502,7 @@
 
 
     $(function() {
-        $("#modalLogin, #modalSignup").on("hidden.bs.modal", function() {
+        $("#modalLogin, #modalSignup, #modalbook").on("hidden.bs.modal", function() {
             location.reload();
         });
     });
