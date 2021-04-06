@@ -114,6 +114,8 @@
             </div>
             <div class="row mt-2">
                 <div class="col-sm-12">
+
+
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -229,7 +231,8 @@
     <div class="modal fade" id="modalbook" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" id="frmbook" action='' enctype='multipart/form-data'>
+
+                <form method="post" id="frmbook"  enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add New Books</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -250,8 +253,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <input type="file" class="custom-file-input" id="file" name="file">
-                                <label class="custom-file-label" for="inputfile">Choose file </label>
+                                <input type="file" id="uploadimage" name="image">
                             </div>
                         </div>
                         <div class="form-row">
@@ -274,7 +276,7 @@
                     </div>
                     <div class="modal-footer" id="bookmodalfooter">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="Submit" class="btn btn-success" value="submit">Add</button>
+                        <button type="submit" class="btn btn-success" value="Upload">Add</button>
                     </div>
                 </form>
             </div>
@@ -387,8 +389,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <input type="file" class="custom-file-input" id="file" name="file">
-                                <label class="custom-file-label" for="inputfile">Choose file </label>
+                                <!-- <input type="file" class="custom-file-input" id="file" name="file">
+                                <label class="custom-file-label" for="inputfile">Choose file </label> -->
                             </div>
                         </div>
                         <div class="form-row">
@@ -437,11 +439,13 @@
 
             $ISBN = $(this).closest("tr").find('.isbn').text();
             $NAME = $(this).closest("tr").find('.name').text();
+            $img =$(this).closest("tr").find('.image').text();
             $AUTHOR = $(this).closest("tr").find('.author').text();
             $IN_STOCK = $(this).closest("tr").find('.stock').text();
             $PRICE = $(this).closest("tr").find('.price').text();
             console.log($ISBN);
             console.log($NAME);
+            console.log($img);
             console.log($AUTHOR);
             console.log($IN_STOCK);
             console.log($PRICE);
@@ -491,7 +495,7 @@
             $text = "Edit Books: " + $(this).closest("tr").find('.isbn').text();
 
             $('.edittext').text($text);
-            //console.log($key);
+            console.log($key);
 
             $("#frmbookedit").submit(function() {
             console.log("Edit Pass")
@@ -501,7 +505,7 @@
                 url: "edit.php",
                 type: "POST",
                 data: $('form#frmbookedit',).serialize(),
-                success: function(data,key) {
+                success: function(data) {
                     //console.log($key);
                     console.log("data:" + data);
                     $("#bookeditmodalbody").html(data);
@@ -543,28 +547,31 @@
         });
     });
 
-    // $(function() {
-    //     $("#frmbookedit").submit(function() {
-    //         console.log("Edit Pass")
-    //         event.preventDefault();
-    //         $.ajax({
-    //             url: "edit.php",
-    //             type: "POST",
-    //             data: $('form#frmbookedit').serialize(),
-    //             success: function(data) {
-    //                 console.log("data:" + data);
-    //                 $("#bookeditmodalbody").html(data);
-    //                 var btnClose =
-    //                     ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-    //                 $("#signmodalFooter").html(btnClose);
-    //             },
-    //             error: function(data) {
-    //                 console.log('An error occurred.');
-    //                 console.log(data);
-    //             }
-    //         });
-    //     });
-    // });
+    $(document).ready(function(e) {
+        $('#frmbook').on('submit',function(e) {
+            console.log("onClick");
+            e.preventDefault();
+            $.ajax({
+                url: "books.php",
+                type: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                   console.log(data);
+                   $("#bookmodalbody").html(data);
+                   var btnClose =
+                   ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+                   $("#bookmodalfooter").html(btnClose);
+                },
+                error: function(e) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+
 
     $(function() {
         $("#modalbookdetail").submit(function() {
@@ -589,28 +596,28 @@
         });
     });
 
-    $(function() {
-        $("#frmbook").submit(function() {
-            console.log("detail");
-            event.preventDefault();
-            $.ajax({
-                url: "books.php",
-                type: "POST",
-                data: $('form#frmbook').serialize(),
-                success: function(data) {
-                    console.log("data:" + data);
-                    $("#signupmodalbody").html(data);
-                    var btnClose =
-                        ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-                    $("#bookmodalfooter").html(btnClose);
-                },
-                error: function(data) {
-                    console.log('An error occurred.');
-                    console.log(data);
-                }
-            });
-        });
-    });
+    // $(function() {
+    //     $("#frmbook").submit(function(e) {
+    //         console.log("detail");
+    //         event.preventDefault();
+    //         $.ajax({
+    //             url: "books.php",
+    //             type: "POST",
+    //             data: $('form#frmbook').serialize(),
+    //             success: function(data) {
+    //                 console.log("data:" + data);
+    //                 $("#signupmodalbody").html(data);
+    //                 var btnClose =
+    //                     ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+    //                 $("#bookmodalfooter").html(btnClose);
+    //             },
+    //             error: function(data) {
+    //                 console.log('An error occurred.');
+    //                 console.log(data);
+    //             }
+    //         });
+    //     });
+    // });
 
     $(function() {
         $("#frmLogin").submit(function() {
