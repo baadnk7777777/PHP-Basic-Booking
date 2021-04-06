@@ -139,7 +139,7 @@
                                 $arr="";
                                 if($str != "") {
                                     $arr = explode(',', $str);
-                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td><td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
+                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td> <td class='image' style='display:none'> $arr[2] </td> <td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
                                 }
                             }
                             fclose($myfile);
@@ -301,15 +301,15 @@
                             <table class="table table-bordered col">
                                 <tbody>
                                     <tr>
-                                        <th scope="col">
+                                        <th scope="col-4">
                                             <p class="font-weight-normal">ISBN</p>
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col-4">
                                             <p class="font-weight-normal isbn-id"> </p>
                                             </h6>
                                         </th>
-                                        <th scope="col" rowspan="5">
-                                            <p class=""> </p>
+                                        <th scope="col" rowspan="5" >
+                                            <p class="font-weight-normal  d-flex justify-content-center" id="img">  </p>  
                                             </h6>
                                         </th>
                                     </tr>
@@ -439,24 +439,30 @@
 
             $ISBN = $(this).closest("tr").find('.isbn').text();
             $NAME = $(this).closest("tr").find('.name').text();
-            $img =$(this).closest("tr").find('.image').text();
+            $IMG = $(this).closest("tr").find('.image').text();
             $AUTHOR = $(this).closest("tr").find('.author').text();
             $IN_STOCK = $(this).closest("tr").find('.stock').text();
             $PRICE = $(this).closest("tr").find('.price').text();
-            console.log($ISBN);
+
+              console.log($ISBN);
             console.log($NAME);
-            console.log($img);
+            console.log($IMG);
             console.log($AUTHOR);
             console.log($IN_STOCK);
             console.log($PRICE);
 
-            $('#ISBN').val($ISBN);
-            $('#NAME').val($NAME);
             $('.isbn-id').text($ISBN);
             $('.name-id').text($NAME);
-            $('#author-id').text($AUTHOR);
-            $('#stock-id').text($IN_STOCK);
-            $('#price-id').text($PRICE);
+            $('.img-id').text($IMG);
+            $('.author-id').text($AUTHOR);
+            $('.stock-id').text($IN_STOCK);
+            $('.price-id').text($PRICE);
+
+            var number = $IMG;
+            var $imgpush =  "<img id ='img' src='uploads/' + width='50%'>  "  
+            // $("#img").html("<img id ='img' src='uploads/" +$IMG"'  width='50%'>  );
+            $("#img").html("<img class='img' src='uploads/"+$.trim(number)+"' width=50%' </img>");
+            // $('.html').html("<div class='new' id='" + id + "'>jitender</div>");
         });
     });
 
@@ -485,7 +491,6 @@
             $('#NAME').val($NAME);
 
             $('.isbn-id').text($ISBN);
-
             $('#name-id').text($NAME);
             $('#author-id').val($AUTHOR);
             $('#stock-id').val($IN_STOCK);
@@ -596,28 +601,6 @@
         });
     });
 
-    // $(function() {
-    //     $("#frmbook").submit(function(e) {
-    //         console.log("detail");
-    //         event.preventDefault();
-    //         $.ajax({
-    //             url: "books.php",
-    //             type: "POST",
-    //             data: $('form#frmbook').serialize(),
-    //             success: function(data) {
-    //                 console.log("data:" + data);
-    //                 $("#signupmodalbody").html(data);
-    //                 var btnClose =
-    //                     ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-    //                 $("#bookmodalfooter").html(btnClose);
-    //             },
-    //             error: function(data) {
-    //                 console.log('An error occurred.');
-    //                 console.log(data);
-    //             }
-    //         });
-    //     });
-    // });
 
     $(function() {
         $("#frmLogin").submit(function() {
