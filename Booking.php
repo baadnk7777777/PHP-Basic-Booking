@@ -104,14 +104,15 @@
     <div class="Booklist" id="booklist">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-2 d-flex align-items-center ">
                     <h5>List of Books</h5>
                 </div>
-                <div class="col-sm-6 d-flex justify-content-end ">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#modalbook">Add New Books</button>
+                <div class="col-sm-6 d-flex justify-content-end d-flex align-items-center ">
+                    <button class="btn btn-success mt-5 d-flex align-items-center" data-toggle="modal"
+                        data-target="#modalbook">Add New Books</button>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-2">
                 <div class="col-sm-12">
                     <table class="table table-striped">
                         <thead>
@@ -121,7 +122,7 @@
                                 <th scope="col">Author</th>
                                 <th scope="col">In Stock</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col" colspan="3">Actions</th>
 
                             </tr>
                         </thead>
@@ -130,19 +131,13 @@
                             <?php 
                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
                             $num_row =0;
-                            $key =0;
                             while(!feof($myfile)) {
                                 $str = fgets($myfile);
                                 $num_row++;
-                                $key++;
                                 $arr="";
-                                // $btneye ='<i class="fa fa-eye nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
-                                // $btnpen ='<i class="fa fa-pencil nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
-                                // $btnbin ='<i class="fa fa-trash nav-link " data-toggle="modal" data-target="#modalLogin" aria-hidden="true"></i>';
-                                $test = '<div class="row"><i class="fa fa-eye nav-link col-1 " data-toggle="modal" data-target="#modalbookdetail" aria-hidden="true" id= '.$key.'  ></i> <i class="fa fa-pencil nav-link col-1 " data-toggle="modal" data-target="#modalbookedit"  aria-hidden="true"></i><i class="fa fa-trash nav-link col-1 " data-toggle="modal" data-target=""></div>';
                                 if($str != "") {
                                     $arr = explode(',', $str);
-                                    echo "<tr><th scope = 'row'>  $arr[0]</th> <td> $arr[1] </td><td>$arr[3]</td> <td> $arr[4] </td><td> $arr[5] </td><td> $test</td></tr>";
+                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td><td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
                                 }
                             }
                             fclose($myfile);
@@ -156,6 +151,8 @@
             </div>
         </div>
     </div>
+
+
 
     <!-- modal SignUp -->
 
@@ -289,130 +286,137 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Book Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bookdetailmodalbody">
+
+                    <div class="container">
+                        <div class="row">
+                            <table class="table table-bordered col">
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">
+                                            <p class="font-weight-normal">ISBN</p>
+                                        </th>
+                                        <th scope="col">
+                                            <p class="font-weight-normal isbn-id"> </p>
+                                            </h6>
+                                        </th>
+                                        <th scope="col" rowspan="5">
+                                            <p class=""> </p>
+                                            </h6>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">
+                                            <p class="font-weight-normal">NAME</p>
+                                        </th>
+                                        <th scope="col">
+                                            <p class="font-weight-normal name-id"> </p>
+                                            </h6>
+                                        </th>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">
+                                            <p class="font-weight-normal">Author</p>
+                                        </th>
+                                        <th scope="col">
+                                            <p class="font-weight-normal author-id"> </p>
+                                            </h6>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">
+                                            <p class="font-weight-normal">In Stock</p>
+                                        </th>
+                                        <th scope="col">
+                                            <p class="font-weight-normal stock-id"> </p>
+                                            </h6>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">
+                                            <p class="font-weight-normal">Price</p>
+                                        </th>
+                                        <th scope="col">
+                                            <p class="font-weight-normal price-id"> </p>
+                                            </h6>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer" id="bookdetailfooter">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+     <!-- Modal edit -->
+     <div class="modal fade" id="modalbookedit" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" id="frmbookedit" action='' enctype='multipart/form-data'>
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Book Detail</h5>
+                        <h5 class="modal-title edittext" id="exampleModalLabel"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id="bookdetailmodalbody">
-                        <div class="row">
-                            <div class="col-6">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row"> ISBN</th>
-                                            <?php 
-                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
-                                             $num_row =0;
-                                             while(!feof($myfile)) {
-                                                $str = fgets($myfile);
-                                                $num_row++;
-                                                $arr="";
-                                                
-                                                if($str != "" && $num_row ==1 ) {
-                                                    $arr = explode(',', $str);
-                                                    echo "<td> $arr[0] </td>";
-                                                } 
-                                             }
-                                             
-                                            ?> 
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> Name</th>
-                                            <?php 
-                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
-                                             $num_row =0;
-                                             while(!feof($myfile)) {
-                                                $str = fgets($myfile);
-                                                $num_row++;
-                                                $arr="";
-                                                
-                                                if($str != "" && $num_row ==1 ) {
-                                                    $arr = explode(',', $str);
-                                                    echo "<td> $arr[1] </td>";
-                                                } 
-                                             }
-                                             
-                                            ?> 
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> Author</th>
-                                            <?php 
-                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
-                                             $num_row =0;
-                                             while(!feof($myfile)) {
-                                                $str = fgets($myfile);
-                                                $num_row++;
-                                                $arr="";
-                                                
-                                                if($str != "" && $num_row ==1 ) {
-                                                    $arr = explode(',', $str);
-                                                    echo "<td> $arr[3] </td>";
-                                                } 
-                                             }
-                                             
-                                            ?> 
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> In Srock</th>
-                                            <?php 
-                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
-                                             $num_row =0;
-                                             while(!feof($myfile)) {
-                                                $str = fgets($myfile);
-                                                $num_row++;
-                                                $arr="";
-                                                
-                                                if($str != "" && $num_row ==1 ) {
-                                                    $arr = explode(',', $str);
-                                                    echo "<td> $arr[4] </td>";
-                                                } 
-                                             }
-                                             
-                                            ?> 
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> Price </th>
-                                            <?php 
-                                             $myfile = fopen("books.txt", "r") or die ("Unable to open file.");
-                                             $num_row =0;
-                                             while(!feof($myfile)) {
-                                                $str = fgets($myfile);
-                                                $num_row++;
-                                                $arr="";
-                                                
-                                                if($str != "" && $num_row ==1 ) {
-                                                    $arr = explode(',', $str);
-                                                    echo "<td> $arr[5] </td>";
-                                                } 
-                                             }
-                                             
-                                            ?> 
-                                        </tr>
-                                        <?php fclose($myfile); ?>
-                                    </tbody>
-
-                                </table>
-                            </div>
-
-                            <div class="col-6">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat vitae, optio, ratione
-                                rerum doloremque, ab at aperiam saepe magnam aliquid eum laudantium? Ullam non dolore
-                                culpa quae ab, corporis aliquam?
+                    <div class="modal-body" id="bookeditmodalbody">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control" id="ISBN" name="ISBN" readonly require>
                             </div>
                         </div>
-
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control" id="NAME" name="txtnamebook"
+                                    require>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="file" class="custom-file-input" id="file" name="file">
+                                <label class="custom-file-label" for="inputfile">Choose file </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control " id="author-id" name="txtatname" 
+                                    require>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control " id="stock-id"name="txtnis"
+                                    require>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control "id="price-id" name="txtprice" require>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer" id="bookdetailfooter">
+                    <div class="modal-footer" id="bookeditmodalfooter">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="Submit" class="btn btn-success" value="submit">Add</button>
+                        <button type="Submit" class="btn btn-success" value="submit" name="submit">Edit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
 
 
     <!-- Optional JavaScript -->
@@ -427,9 +431,94 @@
 
     <script>
     $(document).ready(function() {
+        $('.detail').click(function(e) {
+            e.preventDefault();
+            console.log("tes");
+
+            $ISBN = $(this).closest("tr").find('.isbn').text();
+            $NAME = $(this).closest("tr").find('.name').text();
+            $AUTHOR = $(this).closest("tr").find('.author').text();
+            $IN_STOCK = $(this).closest("tr").find('.stock').text();
+            $PRICE = $(this).closest("tr").find('.price').text();
+            console.log($ISBN);
+            console.log($NAME);
+            console.log($AUTHOR);
+            console.log($IN_STOCK);
+            console.log($PRICE);
+
+            $('#ISBN').val($ISBN);
+            $('#NAME').val($NAME);
+            $('.isbn-id').text($ISBN);
+            $('.name-id').text($NAME);
+            $('#author-id').text($AUTHOR);
+            $('#stock-id').text($IN_STOCK);
+            $('#price-id').text($PRICE);
+        });
+    });
+
+    $(document).ready(function() {
         console.log("ready!");
         $('#booklist').hide();
     });
+
+    $(document).ready(function() {
+        $('.edit').click(function(e) {
+            e.preventDefault();
+            console.log("edit");
+
+            $ISBN = $(this).closest("tr").find('.isbn').text();
+            $NAME = $(this).closest("tr").find('.name').text();
+            $AUTHOR = $(this).closest("tr").find('.author').text();
+            $IN_STOCK = $(this).closest("tr").find('.stock').text();
+            $PRICE = $(this).closest("tr").find('.price').text();
+            console.log($ISBN);
+            console.log($NAME);
+            console.log($AUTHOR);
+            console.log($IN_STOCK);
+            console.log($PRICE);
+
+            $('#ISBN').val($ISBN);
+            $('#NAME').val($NAME);
+
+            $('.isbn-id').text($ISBN);
+
+            $('#name-id').text($NAME);
+            $('#author-id').val($AUTHOR);
+            $('#stock-id').val($IN_STOCK);
+            $('#price-id').val($PRICE);
+            
+            $key = $(this).closest("tr").find('.isbn').text();
+            $text = "Edit Books: " + $(this).closest("tr").find('.isbn').text();
+
+            $('.edittext').text($text);
+            //console.log($key);
+
+            $("#frmbookedit").submit(function() {
+            console.log("Edit Pass")
+            console.log($key);
+            event.preventDefault();
+            $.ajax({
+                url: "edit.php",
+                type: "POST",
+                data: $('form#frmbookedit',).serialize(),
+                success: function(data,key) {
+                    //console.log($key);
+                    console.log("data:" + data);
+                    $("#bookeditmodalbody").html(data);
+                    var btnClose =
+                        ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+                    $("#signmodalFooter").html(btnClose);
+                },
+                error: function(data) {
+                    console.log('An error occurred.');
+                    console.log(data);
+                }
+            });
+        });
+        });
+    });
+
+
 
     $(function() {
         $("#frmSignup").submit(function() {
@@ -444,7 +533,53 @@
                     $("#bookmodalbody").html(data);
                     var btnClose =
                         ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-                    $("#signmodalFooter").html(btnClose);
+                    $("#bookeditmodalfooter").html(btnClose);
+                },
+                error: function(data) {
+                    console.log('An error occurred.');
+                    console.log(data);
+                }
+            });
+        });
+    });
+
+    // $(function() {
+    //     $("#frmbookedit").submit(function() {
+    //         console.log("Edit Pass")
+    //         event.preventDefault();
+    //         $.ajax({
+    //             url: "edit.php",
+    //             type: "POST",
+    //             data: $('form#frmbookedit').serialize(),
+    //             success: function(data) {
+    //                 console.log("data:" + data);
+    //                 $("#bookeditmodalbody").html(data);
+    //                 var btnClose =
+    //                     ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+    //                 $("#signmodalFooter").html(btnClose);
+    //             },
+    //             error: function(data) {
+    //                 console.log('An error occurred.');
+    //                 console.log(data);
+    //             }
+    //         });
+    //     });
+    // });
+
+    $(function() {
+        $("#modalbookdetail").submit(function() {
+            console.log("Book");
+            event.preventDefault();
+            $.ajax({
+                url: "books.php",
+                type: "POST",
+                data: $('form#modalbookdetail').serialize(),
+                success: function(data) {
+                    console.log("data:" + data);
+                    $("#bookdetailmodalbody").html(data);
+                    var btnClose =
+                        ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+                    $("#bookdetailfooter").html(btnClose);
                 },
                 error: function(data) {
                     console.log('An error occurred.');
@@ -456,7 +591,7 @@
 
     $(function() {
         $("#frmbook").submit(function() {
-            console.log("Book");
+            console.log("detail");
             event.preventDefault();
             $.ajax({
                 url: "books.php",
