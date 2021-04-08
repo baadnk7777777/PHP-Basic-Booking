@@ -4,8 +4,6 @@
     $output ="";
     $path = 'uploads/';
 
-
-
     if(isset($_POST['txtisbn'])){
 
         $img = $_FILES['image']['name'];

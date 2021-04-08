@@ -139,7 +139,7 @@
                                 $arr="";
                                 if($str != "") {
                                     $arr = explode(',', $str);
-                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td> <td class='image' style='display:none'> $arr[2] </td> <td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
+                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td> <td class='image' style='display:none'> $arr[2] </td> <td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]' id='$arr[6]' data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
                                 }
                             }
                             fclose($myfile);
@@ -309,7 +309,7 @@
                                             </h6>
                                         </th>
                                         <th scope="col" rowspan="5" >
-                                            <p class="font-weight-normal  d-flex justify-content-center" id="img">  </p>  
+                                            <p class="font-weight-normal  d-flex justify-content-center " id="img">  </p>  
                                             </h6>
                                         </th>
                                     </tr>
@@ -414,6 +414,7 @@
                     <div class="modal-footer" id="bookeditmodalfooter">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="Submit" class="btn btn-success" value="submit" name="submit">Edit</button>
+                        <input type="text" name="edit-id" id="edit-id" value="">
                     </div>
                 </form>
             </div>
@@ -476,55 +477,35 @@
             e.preventDefault();
             console.log("edit");
 
-            $ISBN = $(this).closest("tr").find('.isbn').text();
-            $NAME = $(this).closest("tr").find('.name').text();
-            $AUTHOR = $(this).closest("tr").find('.author').text();
-            $IN_STOCK = $(this).closest("tr").find('.stock').text();
-            $PRICE = $(this).closest("tr").find('.price').text();
-            console.log($ISBN);
-            console.log($NAME);
-            console.log($AUTHOR);
-            console.log($IN_STOCK);
-            console.log($PRICE);
-
-            $('#ISBN').val($ISBN);
-            $('#NAME').val($NAME);
-
-            $('.isbn-id').text($ISBN);
-            $('#name-id').text($NAME);
-            $('#author-id').val($AUTHOR);
-            $('#stock-id').val($IN_STOCK);
-            $('#price-id').val($PRICE);
-            
-            $key = $(this).closest("tr").find('.isbn').text();
-            $text = "Edit Books: " + $(this).closest("tr").find('.isbn').text();
-
-            $('.edittext').text($text);
+            $key = $(this).attr('id');
             console.log($key);
-
-            $("#frmbookedit").submit(function() {
-            console.log("Edit Pass")
-            console.log($key);
-            event.preventDefault();
+            $('#edit-id').val($key);
+        });
+        $('#frmbookedit').on('submit',function(e) {
+            console.log("onClick");
+            e.preventDefault();
             $.ajax({
                 url: "edit.php",
                 type: "POST",
-                data: $('form#frmbookedit',).serialize(),
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function(data) {
-                    //console.log($key);
-                    console.log("data:" + data);
-                    $("#bookeditmodalbody").html(data);
-                    var btnClose =
-                        ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-                    $("#signmodalFooter").html(btnClose);
+                   console.log(data);
+                   $("#bookeditmodalbody").html(data);
+                   var btnClose =
+                   ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+                   $("#bookeditmodalfooter").html(btnClose);
                 },
-                error: function(data) {
-                    console.log('An error occurred.');
-                    console.log(data);
+                error: function(e) {
+                    console.log(error);
                 }
             });
         });
-        });
+
+
+        
     });
 
 
