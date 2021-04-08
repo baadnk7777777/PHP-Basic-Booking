@@ -1,66 +1,32 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html>
+<body>
+<?php
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
+// configuration
+$url = 'http://example.com/backend/editor.php';
+$file = '/path/to/txt/file';
 
-    <div class="container-fluid">
-        <form action="action.php">
-            <input type="file" id="mypic" name="mypic">
-            <button type="button" class="btn btn-outline-primary" id="upload" value="Upload" >Upload</button>
-        </form>
-    </div>
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
-  <script>
+// check if form has been submitted
+if (isset($_POST['text']))
+{
+    // save the text contents
+    file_put_contents($file, $_POST['text']);
 
-  $(document).ready(function(){
+    // redirect to form again
+    header(sprintf('Location: %s', $url));
+    printf('<a href="%s">Moved</a>.', htmlspecialchars($url));
+    exit();
+}
 
-$("#upload").click(function(){
+// read the textfile
+$text = file_get_contents($file);
 
-    var fd = new FormData();
-    var files = $('#file')[0].files;
-    
-    // Check file selected or not
-    if(files.length > 0 ){
-       fd.append('file',files[0]);
+?>
+<form action="" method="post">
+<textarea name="text"><?php echo htmlspecialchars($text) ?></textarea>
+<input type="submit" />
+<input type="reset" />
+</form>
 
-       $.ajax({
-          url: 'upload.php',
-          type: 'post',
-          data: fd,
-          contentType: false,
-          processData: false,
-          success: function(response){
-             if(response != 0){
-                $("#img").attr("src",response); 
-                $(".preview img").show(); // Display image element
-             }else{
-                alert('file not uploaded');
-             }
-          },
-       });
-    }else{
-       alert("Please select a file.");
-    }
-});
-});
-
-  </script>
-
-    
-
-  </body>
+</body>
 </html>

@@ -139,7 +139,7 @@
                                 $arr="";
                                 if($str != "") {
                                     $arr = explode(',', $str);
-                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td> <td class='image' style='display:none'> $arr[2] </td> <td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]' id='$arr[6]' data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
+                                    echo "<tr><td scope = 'row' class='isbn' >  $arr[0]</td> <td class='name'> $arr[1] </td> <td class='image' style='display:none'> $arr[2] </td> <td class='author'>$arr[3]</td> <td class='stock'> $arr[4] </td><td class='price'> $arr[5] </td><td> <button class='btn btn-info detail'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#modalbookdetail'> Detail </button></td> <td> <button class='btn btn-info edit'  value='$arr[6]' name='$arr[6]' id='$arr[6]' data-toggle='modal' data-target='#modalbookedit'> EDIT </button></td> <td> <button class='btn btn-info delete'  value='$arr[6]' name='$arr[6]'  data-toggle='modal' data-target='#'> DL </button></td> </tr>";
                                 }
                             }
                             fclose($myfile);
@@ -378,19 +378,19 @@
                     <div class="modal-body" id="bookeditmodalbody">
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <input type="text" class="form-control" id="ISBN" name="ISBN" readonly require>
+                                <input type="text" class="form-control " id="ISBN" name="ISBN" readonly require>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <input type="text" class="form-control" id="NAME" name="txtnamebook"
-                                    require>
+                                <input type="text" class="form-control name-id" id="NAME" name="txtnamebook"
+                                    value="" >
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <!-- <input type="file" class="custom-file-input" id="file" name="file">
-                                <label class="custom-file-label" for="inputfile">Choose file </label> -->
+                            <input type="file" id="uploadimage" name="image" value="pic">
+                            <p class="font-weight-normal  d-flex justify-content-center " id="imge">  </p>  
                             </div>
                         </div>
                         <div class="form-row">
@@ -414,7 +414,7 @@
                     <div class="modal-footer" id="bookeditmodalfooter">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="Submit" class="btn btn-success" value="submit" name="submit">Edit</button>
-                        <input type="text" name="edit-id" id="edit-id" value="">
+                        <input type="hidden" name="edit-id" id="edit-id" value="">
                     </div>
                 </form>
             </div>
@@ -473,13 +473,47 @@
     });
 
     $(document).ready(function() {
+
+        //  $(this).closest('tr').remove();
+        $('.delete').click(function(e){
+            e.preventDefault();
+            console.log("delete");
+
+        });
+
         $('.edit').click(function(e) {
             e.preventDefault();
             console.log("edit");
+            
+            $ISBN = $(this).closest("tr").find('.isbn').text();
+            $NAME = $(this).closest("tr").find('.name').text();
+            $IMG = $(this).closest("tr").find('.image').text();
+            $AUTHOR = $(this).closest("tr").find('.author').text();
+            $IN_STOCK = $(this).closest("tr").find('.stock').text();
+            $PRICE = $(this).closest("tr").find('.price').text();
+
+            // $('.isbn-id').text($ISBN);
+            $('.name-id').text($NAME);
+            $('.img-id').text($IMG);
+            $('.author-id').text($AUTHOR);
+            $('.stock-id').text($IN_STOCK);
+            $('.price-id').text($PRICE);
 
             $key = $(this).attr('id');
             console.log($key);
             $('#edit-id').val($key);
+            $('#ISBN').val($ISBN);
+            $('#NAME').val($NAME);
+            $('#NAME').val($NAME);
+            $('#author-id').val($AUTHOR);
+            $('#stock-id').val($IN_STOCK);
+            $('#price-id').val($PRICE);
+
+            var number = $IMG;
+            var $imgpush =  "<img id ='img' src='uploads/' + width='50%'>  "  
+            $("#imge").html("<img class='img' src='uploads/"+$.trim(number)+"' width=30%' </img>");
+            $(".edittext").html("<h5 modal-title edittext > Edit Book: " + $ISBN +" </h5>");
+
         });
         $('#frmbookedit').on('submit',function(e) {
             console.log("onClick");
